@@ -87,7 +87,7 @@
 
             <?php if($collection->have_posts()) : while($collection->have_posts()) :$collection->the_post(); ?>
 
-          <div class="flex justify-between flex-col md:flex-row gap-10 mb-10">
+          <div class="collection__items flex justify-between flex-col md:flex-row gap-10 mb-10">
             <div class="collection__item__img basis-1/2">
               <?php if(has_post_thumbnail()) {the_post_thumbnail(); }?>
             </div>
@@ -97,7 +97,7 @@
               >
                 <small><?php echo get_the_category()[0]->name?></small>
                 <h3><?php the_title()?></h3>
-                <?php echo get_the_excerpt()?>
+                <?php echo wp_trim_words(get_the_excerpt(), 25)?>
                 <a href="<?php the_permalink()?>" class="btn btn--accent">Read More</a>
               </div>
             </div>
@@ -109,6 +109,67 @@
                 endif;
                 wp_reset_postdata();
             ?>
+
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="newsletter h-[50vh] grid place-content-center bg-cover bg-no-repeat bg-center"
+      >
+      <div class="newsletter__content max-w-[750px] w-full text-center px-1">
+        <h2>Get out weekly Newsletter</h2>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minima
+          molestiae earum quam eos veritatis saepe explicabo cupiditate facere
+          harum animi.
+        </p>
+        <form action="">
+          <div class="">
+            <input type="text" placeholder="Email" />
+            <button class="btn btn--accent">Subscribe</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="classic mb-20">
+      <div class="container mx-auto">
+        <h2 class="mb-20">Recipe classic</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+
+          <?php $classic = new WP_Query(array ( 
+                'post_type' => 'post',
+                'posts_per_page' => 9,
+                'meta_key' => 'Groupings',
+                'meta_value' => 'HomeClassic',
+                'order' => 'ASC'
+            ))?>
+
+            <?php if($classic->have_posts()) : while($classic->have_posts()) :$classic->the_post(); ?>
+
+          <div class="classic__item flex gap-4">
+            <?php if(has_post_thumbnail()) {the_post_thumbnail(); }?>
+            <div class="classic__item__content">
+              <small><?php echo get_the_category()[0]->name?></small>
+              <h4><?php the_title()?></h4>
+              <ul class="flex gap-2 mb-4">
+                <li><i class="fas fa-star <?php echo get_post_meta(get_the_ID(), 'Rating1', true)?>"></i></li>
+                <li><i class="fas fa-star <?php echo get_post_meta(get_the_ID(), 'Rating2', true)?>"></i></li>
+                <li><i class="fas fa-star <?php echo get_post_meta(get_the_ID(), 'Rating3', true)?>"></i></li>
+                <li><i class="fas fa-star <?php echo get_post_meta(get_the_ID(), 'Rating4', true)?>"></i></li>
+                <li><i class="fas fa-star <?php echo get_post_meta(get_the_ID(), 'Rating5', true)?>"></i></li>
+              </ul>
+              <a href="<?php the_permalink()?>">Get Recipe Here</a>
+            </div>
+          </div>
+
+          <?php endwhile;
+              else:
+                  echo "no menus";
+              endif;
+              wp_reset_postdata();
+          ?>
 
         </div>
       </div>

@@ -14,6 +14,7 @@ function recipe_theme_support(){
     add_theme_support('title-tag');
 
     register_nav_menu('header_menu', 'Header Menu');
+    register_nav_menu('footer_menu', 'Footer Menu');
 }
 
 add_action('after_setup_theme', 'recipe_theme_support');
